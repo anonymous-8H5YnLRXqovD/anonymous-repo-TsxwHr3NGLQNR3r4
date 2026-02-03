@@ -1,0 +1,124 @@
+:root {
+    --primary-color: #2c3e50; /* Academic Blue/Grey */
+    --accent-color: #3498db;  /* Highlight Blue */
+    --bg-light: #f8f9fa;
+}
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #fff;
+    color: #333;
+    padding-top: 70px; /* Space for fixed navbar */
+    padding-bottom: 50px; /* Space for fixed footer */
+}
+h1, h2, h3, h4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Navbar Styling like Google Sites */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary-color) !important;
+}
+.nav-link {
+    font-weight: 500;
+    color: #555 !important;
+    margin-left: 15px;
+    position: relative;
+}
+.nav-link.active {
+    color: var(--accent-color) !important;
+}
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: -10px;
+    left: 0;
+    background-color: var(--accent-color);
+}
+
+/* Sections */
+.page-section {
+    display: none; /* Hidden by default, toggled by JS */
+    padding: 40px 0;
+    animation: fadeIn 0.5s;
+}
+.page-section.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero Section */
+.hero-box {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 3rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Card & Prompt Styling */
+.prompt-box {
+    background-color: #f1f3f5;
+    border-left: 5px solid var(--accent-color);
+    padding: 15px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.figure-placeholder {
+    background-color: #e9ecef;
+    border: 2px dashed #ced4da;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+.caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Table Styling */
+.custom-table th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
