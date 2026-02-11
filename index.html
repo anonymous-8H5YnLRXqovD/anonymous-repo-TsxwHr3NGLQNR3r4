@@ -7,7 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="index.css">
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 
@@ -31,15 +40,15 @@
                         <a class="nav-link" href="#" onclick="showSection('prompts')" id="nav-prompts">Prompts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('cases')" id="nav-cases">Case Studies</a>
+                        <a class="nav-link" href="#" onclick="showSection('cases')" id="nav-cases">Evaluation</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-
+    <div class="main-wrapper">
+        <!-- Home Page -->
         <div id="home" class="page-section active">
             <div class="hero-box">
                 <h1 class="display-5 mb-3">Compiling Large Multi-Modal Requirement Documents into Runnable Web Systems</h1>
@@ -50,40 +59,131 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h3 class="border-bottom pb-2 mb-3">Abstract</h3>
+            <!-- Quick Jump -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="mt-4 mb-5 bg-white p-4 rounded shadow-sm">
+                            <h5 class="border-bottom pb-2 mb-3"><i class="fas fa-bookmark me-2 text-primary"></i>Paper Quick Links</h5>
+                            <ul class="list-unstyled mb-0 text-start d-inline-block fs-5">
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('home', 'meta-model')">Line 179-180: BNF specification (formal grammar of our DSL)</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('benchmark', 'modeling-tool')">Line 193-195, Line 571-572: Requirement Modeling Tool</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('home', 'methodology')">Line 342-343: An illustrative animation of our algorithm</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('prompts', null)">Line 415-416, Line 519: Detailed agent prompt</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('benchmark', 'supplementary')">Line 551: Visible and functional features for each web system</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('cases', null, 'pills-rq1')">Line 674: Failing cases</a></li>
+                                <li class="mb-0"><a href="#" class="text-decoration-none" onclick="jumpTo('cases', null, 'pills-user')">Line 762,763: Detailed metric distribution and results</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                    <h3 id="meta-model" class="border-bottom pb-2 mb-3">Meta-Model of Requirement</h3>
                     <p class="text-justify">
-                        Large Language Models (LLMs) have significantly improved programming efficiency but suffer from "complexity walls" when requirements scale. When faced with multi-modal documents containing hundreds of scenarios, traditional agentic approaches often produce incorrect implementations or omit crucial constraints.
+                        We define a requirement document as a directed acyclic graph (DAG) of Requirement Nodes, where each node encapsulates multi-modal descriptions, scenarios, and Gherkin-like steps for full-stack specifications. The formal BNF definition is as follows:
                     </p>
+                    <div id="bnf-display" class="mb-4 border rounded p-3 bg-light" style="overflow-x: auto;">
+                    </div>
+
                     <p class="text-justify">
-                        We propose <strong>ARC (Agentic Requirement Compilation)</strong>, a framework that shifts the paradigm from stochastic code generation to rigorous requirement compilation. ARC parses multi-modal requirement documents (in a DSL format) into runnable web systems. It employs a bidirectional test-driven agentic loop: <strong>Top-down</strong> decomposition of requirements into verifiable interfaces, and <strong>Bottom-up</strong> code generation gated by generated test suites.
+                        An example of a requirement document is shown below:
                     </p>
+                    <div class="mb-5 border rounded shadow-sm text-center">
+                        <img src="assets/requirement-example.png" alt="Requirement Document Example" class="img-fluid" />
+                    </div>
                     
-                    <h3 class="border-bottom pb-2 mb-3 mt-5">Methodology Overview</h3>
+                    <h3 id="methodology" class="border-bottom pb-2 mb-5 mt-5">Methodology Overview</h3>
+                    
+                    <!-- Step 1: DFS Strategy -->
+                    <div class="method-step mb-5">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold"><i class="fas fa-project-diagram me-2 text-primary"></i>1. DFS Strategy</h4>
+                            <p class="text-muted">Synthesizing testable architecture from requirement graph</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlBuPbtBZr27nPX2OdaYUVNhr4kzN80y2OEsGIf6bixL4P3eX1nyBHYWPuVLE1PkafXhmMmiPp05Vo/pubembed?start=false&loop=true&delayms=3000"
+                                    frameborder="0"
+                                    width="640"
+                                    height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Top-down Design -->
+                    <div class="method-step mb-5">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold"><i class="fas fa-layer-group me-2 text-primary"></i>2. Top-down Design Phase</h4>
+                            <p class="text-muted">Decomposing requirements into verifiable interfaces</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSb9EN9SHHxvDWdwKQDKC-412xZdTid022_FAGC2efsI_q_oQK8wZC50qtD_ekcPrAFEtIlFGzU8Byo/pubembed?start=false&loop=true&delayms=3000" 
+                                    frameborder="0" 
+                                    width="640" 
+                                    height="389" 
+                                    allowfullscreen="true" 
+                                    mozallowfullscreen="true" 
+                                    webkitallowfullscreen="true">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Bottom-up Implementation -->
+                    <div class="method-step mb-5">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold"><i class="fas fa-code me-2 text-primary"></i>3. Bottom-up Implementation Phase</h4>
+                            <p class="text-muted">Generating code gated by pre-generated test suites</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSb9EN9SHHxvDWdwKQDKC-412xZdTid022_FAGC2efsI_q_oQK8wZC50qtD_ekcPrAFEtIlFGzU8Byo/pubembed?start=false&loop=true&delayms=3000" 
+                                    frameborder="0" 
+                                    width="640" 
+                                    height="389" 
+                                    allowfullscreen="true" 
+                                    mozallowfullscreen="true" 
+                                    webkitallowfullscreen="true">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 
                     <p>The ARC framework operates in two phases to ensure traceability and correctness:</p>
                     <ul>
                         <li><strong>Phase 1: Testable Architecture Construction.</strong> We use a Domain Specific Language (DSL) to model requirements as a graph. Agents perform a DFS traversal to synthesize database schemas, API definitions, and UI component stubs, while simultaneously generating <em>Test Suites</em> (Unit, API, GUI) for verification.</li>
                         <li><strong>Phase 2: Constrained Code Generation.</strong> Code is implemented bottom-up. A gating mechanism ensures that no code is committed unless it passes the pre-generated tests, solving the hallucination problem in large-scale generation.</li>
-                    </ul>
+                    </ul> 
+                    -->
 
+                    <!-- 
                     <div class="mb-4 text-center">
                         <img src="assets/method_overview.png" alt="Method Overview" class="img-fluid rounded shadow-sm" />
                     </div>
-                    <p class="caption">Figure: The ARC Framework Workflow showing the Top-down synthesis and Bottom-up implementation loop.</p>
+                    <p class="caption">Figure: The ARC Framework Workflow showing the Top-down synthesis and Bottom-up implementation loop.</p> 
+                    -->
                 </div>
+            </div>
             </div>
         </div>
 
-        <div id="benchmark" class="page-section">
-            <div class="text-center mb-5">
-                <h2>Benchmark & Datasets</h2>
-                <p class="text-muted">We curated 6 real-world web systems with increasing complexity for evaluation.</p>
-            </div>
+        <!-- Benchmark -->
+        <div id="benchmark" class="page-section container">
+            <h2 class="text-center mb-5">Dataset & Benchmark</h2>
 
             <div class="card mb-5 shadow-sm">
                 <div class="card-body">
                     <h4 class="card-title mb-4">Target Systems</h4>
+                    <p class="text-muted">We curated 6 real-world web systems with increasing complexity for evaluation.</p>
                     <div class="table-responsive">
                         <table class="table table-hover custom-table text-center align-middle">
                             <thead>
@@ -144,167 +244,146 @@
                 </div>
             </div>
 
+            <div id="modeling-tool" class="card mb-5 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Requirement Modeling Tool</h4>
+                    <p class="text-muted">We design a visualized tool to enable users to design the requirement DSL in a more intuitive way.</p>
+                    <div class="text-center mt-4">
+                        <img src="assets/tool.gif" alt="Requirement Modeling Tool Demo" class="img-fluid rounded border shadow-sm" style="max-width: 85%;">
+                    </div>
+                </div>
+            </div>
+
             <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card h-100 border-primary">
+                <div class="col-12">
+                    <div id="supplementary" class="card h-100 border-primary">
                         <div class="card-header bg-primary text-white">
-                            <i class="fas fa-file-alt me-2"></i> Requirement Documents (DSL)
+                            <i class="fas fa-box-archive me-2"></i> Supplementary Materials
                         </div>
-                        <div class="card-body">
-                            <p>Download the full requirement specifications formatted in our custom DSL (Graph-based structure).</p>
-                            <ul>
-                                <li>Includes `User Stories`</li>
-                                <li>Includes `Data Constraints`</li>
-                                <li>Includes `UI Mockup Descriptions`</li>
+                        <div class="card-body d-flex flex-column">
+                            <p class="mb-2">Download the supplementary package including:</p>
+                            <ul class="mb-3">
+                                <li>Requirement Documents (DSL): Full requirement specifications formatted in our custom DSL.</li>
+                                <li>GUI Test Suites: End-to-end GUI test cases used to evaluate the correctness of generated systems.</li>
                             </ul>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-2"><i class="fas fa-download"></i> Download DSL (.zip)</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100 border-danger">
-                        <div class="card-header bg-danger text-white">
-                            <i class="fas fa-robot me-2"></i> GUI Test Suites
-                        </div>
-                        <div class="card-body">
-                            <p>Download the ground-truth Playwright/Selenium test scripts used to evaluate the correctness of generated systems.</p>
-                            <ul>
-                                <li>End-to-End User Journey Tests</li>
-                                <li>Evaluation Scripts (Python)</li>
-                            </ul>
-                            <a href="#" class="btn btn-outline-danger w-100 mt-2"><i class="fas fa-download"></i> Download Tests (.zip)</a>
+                            <a href="#" class="btn btn-outline-primary w-100 mt-auto"><i class="fas fa-download"></i> Download Materials (.zip)</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="prompts" class="page-section">
-            <h2 class="mb-4">Prompt Engineering</h2>
-            <p class="mb-4">Below are the key system prompts used in the ARC framework. We use a chain-of-thought approach for all agents.</p>
+        <!-- Prompt Page -->
+        <div id="prompts" class="page-section container">
+            <h2 class="text-center mb-5">Prompts</h2>
+            <p class="mb-5 text-center lead text-muted">Below are the key system prompts used in the ARC framework, Ablation Studies, and Baselines. We use a chain-of-thought approach for all agents.</p>
 
-            <div class="accordion" id="accordionPrompts">
+            <!-- Nav Pills -->
+            <ul class="nav nav-pills justify-content-center mb-5 custom-pills" id="promptTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active px-4 py-2" id="pills-arc-tab" data-bs-toggle="pill" data-bs-target="#pills-arc" type="button" role="tab" aria-controls="pills-arc" aria-selected="true">
+                        <i class="fas fa-robot me-2"></i>ARC (Ours)
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 py-2" id="pills-ablation-tab" data-bs-toggle="pill" data-bs-target="#pills-ablation" type="button" role="tab" aria-controls="pills-ablation" aria-selected="false">
+                        <i class="fas fa-flask me-2"></i>Ablation Study
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 py-2" id="pills-baseline-tab" data-bs-toggle="pill" data-bs-target="#pills-baseline" type="button" role="tab" aria-controls="pills-baseline" aria-selected="false">
+                        <i class="fas fa-chart-line me-2"></i>Baseline
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="promptTabsContent">
                 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                            <strong>1. Main System Prompt (Architect Agent)</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Used to decompose the Requirement DSL into technical specifications.</p>
-                            <div class="prompt-box">
-SYSTEM: You are an expert Software Architect capable of translating ambiguous requirements into strict technical specifications.
-INPUT: A Requirement Node containing user stories and data constraints.
-TASK: 
-1. Analyze the dependencies of the current node.
-2. Define the Database Schema (SQL) required.
-3. Define the RESTful API endpoints (OpenAPI format).
-4. Outline the Frontend Component structure (Vue.js/React).
-
-CONSTRAINT: Ensure all data fields mentioned in the requirement are present in the DB schema.
-...
-[Full prompt content would be placed here]
+                <!-- ARC Tab -->
+                <div class="tab-pane fade show active" id="pills-arc" role="tabpanel" aria-labelledby="pills-arc-tab">
+                    <div class="accordion shadow-sm" id="accordionArc">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingArc1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArc1" aria-expanded="true" aria-controls="collapseArc1">
+                                    <strong>1. Main System Prompt (Architect Agent)</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseArc1" class="accordion-collapse collapse show" aria-labelledby="headingArc1" data-bs-parent="#accordionArc">
+                                <div class="accordion-body bg-light">
+                                    <div class="prompt-box" data-key="system_prompt">Loading prompt...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingArc2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArc2" aria-expanded="false" aria-controls="collapseArc2">
+                                    <strong>2. UI Generation & Description Prompt</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseArc2" class="accordion-collapse collapse" aria-labelledby="headingArc2" data-bs-parent="#accordionArc">
+                                <div class="accordion-body bg-light">
+                                    <div class="prompt-box" data-key="ui_gen_prompt">Loading prompt...</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                            <strong>2. UI Generation & Description Prompt</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Used to generate the UI code and the corresponding visual descriptions for multi-modal alignment.</p>
-                            <div class="prompt-box">
-ROLE: Frontend Specialist.
-CONTEXT: You have the following API definitions: {api_context}.
-TASK: Generate a Vue.js component for the "Booking Page".
-REQUIREMENTS:
-- Use ElementUI library.
-- Form must include: DatePicker, StationSelector, SubmitButton.
-- On Submit, call API 'POST /api/tickets/book'.
-
-Output only the code block.
+                <!-- Ablation Tab -->
+                <div class="tab-pane fade" id="pills-ablation" role="tabpanel" aria-labelledby="pills-ablation-tab">
+                    <div class="accordion shadow-sm" id="accordionAblation">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAbl1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbl1" aria-expanded="true" aria-controls="collapseAbl1">
+                                    <strong>1. w/o DFS Strategy (Linear)</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseAbl1" class="accordion-collapse collapse show" aria-labelledby="headingAbl1" data-bs-parent="#accordionAblation">
+                                <div class="accordion-body bg-light">
+                                    <p class="text-muted fst-italic mb-3">Prompts used in the ablation study where the DFS strategy was removed, forcing a sequential workflow.</p>
+                                    <div class="prompt-box" data-key="ablation_dfs_prompt">Loading prompt...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAbl2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbl2" aria-expanded="false" aria-controls="collapseAbl2">
+                                    <strong>2. w/o Test-Driven</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseAbl2" class="accordion-collapse collapse" aria-labelledby="headingAbl2" data-bs-parent="#accordionAblation">
+                                <div class="accordion-body bg-light">
+                                    <p class="text-muted fst-italic mb-3">Prompts used in the ablation study where the test-driven development strategy was removed.</p>
+                                    <div class="prompt-box" data-key="ablation_test_prompt">Loading prompt...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAbl3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbl3" aria-expanded="false" aria-controls="collapseAbl3">
+                                    <strong>3. w/o Traceability</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseAbl3" class="accordion-collapse collapse" aria-labelledby="headingAbl3" data-bs-parent="#accordionAblation">
+                                <div class="accordion-body bg-light">
+                                    <p class="text-muted fst-italic mb-3">Prompts used in the ablation study where traceability mechanisms were removed.</p>
+                                    <div class="prompt-box" data-key="ablation_trace_prompt">Loading prompt...</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThreeA">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreeA">
-                            <strong>3a. Ablation Study Prompts (w/o DFS Strategy)</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseThreeA" class="accordion-collapse collapse" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Prompts used in the ablation study where the DFS strategy was removed.</p>
-                            <div class="prompt-box">
-SYSTEM: You are a coding assistant.
-TASK: Implement the "Login Feature".
-NOTE: You do not have access to the specific Requirement Node ID or the pre-generated test cases. Just implement based on the name.
-...
-                            </div>
+                <!-- Baseline Tab -->
+                <div class="tab-pane fade" id="pills-baseline" role="tabpanel" aria-labelledby="pills-baseline-tab">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-file-alt me-2"></i><strong>Baseline Prompt (Direct Generation)</strong>
                         </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThreeB">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreeB">
-                            <strong>3b. Ablation Study Prompts (w/o Test-Driven)</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseThreeB" class="accordion-collapse collapse" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Prompts used in the ablation study where the test-driven development strategy was removed.</p>
-                            <div class="prompt-box">
-SYSTEM: You are a coding assistant.
-TASK: Implement the "Login Feature".
-NOTE: You do not have access to the specific Requirement Node ID or the pre-generated test cases. Just implement based on the name.
-...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThreeC">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreeC">
-                            <strong>3c. Ablation Study Prompts (w/o Traceability)</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseThreeC" class="accordion-collapse collapse" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Prompts used in the ablation study where explicit traceability links were removed.</p>
-                            <div class="prompt-box">
-SYSTEM: You are a coding assistant.
-TASK: Implement the "Login Feature".
-NOTE: You do not have access to the specific Requirement Node ID or the pre-generated test cases. Just implement based on the name.
-...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
-                            <strong>4. Baseline Prompts (MetaGPT/OpenHands)</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionPrompts">
-                        <div class="accordion-body">
-                            <p>Standard prompts used to trigger baseline agents for fair comparison.</p>
-                            <div class="prompt-box">
-"Write a web application for a Train Ticketing System based on the following requirement document..."
-[Full document text pasted]
-                            </div>
+                        <div class="card-body bg-light">
+                            <p class="text-muted mb-3">The standard prompt used for baseline comparisons (e.g., GPT-4o direct generation) without the ARC framework.</p>
+                            <div class="prompt-box" data-key="baseline_prompt">Loading prompt...</div>
                         </div>
                     </div>
                 </div>
@@ -312,19 +391,16 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
             </div>
         </div>
 
-        <div id="cases" class="page-section">
-            <h2 class="mb-4 text-center">Case Studies & Experimental Results</h2>
-            <p class="text-center text-muted mb-5">Comprehensive evaluation on effectiveness, overhead, and usability.</p>
+        <!-- Evaluation Page -->
+        <div id="cases" class="page-section container">
+            <h2 class="mb-4 text-center">Examples and additional results</h2>
 
             <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-rq1">RQ1: Effectiveness</button>
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-rq1">RQ1: Examples</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-rq2">RQ2: Overhead</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-rq3">RQ3: Ablation</button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-video">Video Demos</button>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-user">User Study</button>
@@ -336,101 +412,17 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                 <!-- RQ1: Effectiveness -->
                 <div class="tab-pane fade show active" id="pills-rq1">
                     <div class="card card-body border-0 shadow-sm">
-                        <h4 class="card-title">RQ1: Can ARC generate correct systems?</h4>
-                        <p class="card-text">We compared ARC against state-of-the-art baselines (MetaGPT, OpenHands, Cursor, Copilot) across systems of varying complexity. The primary metric is <strong>GUI Test Pass Rate</strong>.</p>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-hover mt-3 align-middle text-center">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th class="text-start">Method</th>
-                                        <th>BookStack</th>
-                                        <th>Keep</th>
-                                        <th>Stack Overflow</th>
-                                        <th>PrestaShop</th>
-                                        <th>12306</th>
-                                        <th>Ctrip</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="table-success fw-bold">
-                                        <td class="text-start">ARC (Ours)</td>
-                                        <td>91.11%</td>
-                                        <td>91.85%</td>
-                                        <td>86.67%</td>
-                                        <td>85.78%</td>
-                                        <td>78.75%</td>
-                                        <td>75.42%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">MetaGPT</td>
-                                        <td>76.67%</td>
-                                        <td>55.56%</td>
-                                        <td>53.33%</td>
-                                        <td>48.00%</td>
-                                        <td>41.25%</td>
-                                        <td>18.75%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">OpenHands</td>
-                                        <td>55.56%</td>
-                                        <td>40.00%</td>
-                                        <td>37.22%</td>
-                                        <td>20.44%</td>
-                                        <td>31.67%</td>
-                                        <td>15.00%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">Cursor</td>
-                                        <td>54.44%</td>
-                                        <td>40.74%</td>
-                                        <td>35.00%</td>
-                                        <td>68.00%</td>
-                                        <td>50.83%</td>
-                                        <td>36.25%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start">Copilot</td>
-                                        <td>52.22%</td>
-                                        <td>69.63%</td>
-                                        <td>36.11%</td>
-                                        <td>34.67%</td>
-                                        <td>45.00%</td>
-                                        <td>23.75%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
                         <div class="mt-5">
                             <!-- Section 1: Why Baselines Fail -->
                             <div class="mb-5">
-                                <h5><i class="fas fa-times-circle text-danger"></i> Why Baselines Fail?</h5>
-                                <p class="text-muted">
-                                    Baselines often compress requirements into unstructured summaries, creating an information bottleneck. 
-                                    They also suffer from fragmented implementation where new changes break existing functionalities.
-                                </p>
-                                
+                                <h5><i class="fas fa-times-circle text-danger"></i> Why Baselines Fail?</h5>                                
                                 <!-- Baseline Defect 1 -->
                                 <div class="card bg-light border-0 mb-3">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold text-danger">Defect Type 1: Functionally Incomplete (Information Bottleneck)</h6>
-                                        <p class="small text-muted mb-2">Baselines generate PRDs from coarse overviews, losing crucial details.</p>
-                                        
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Requirement Detail</small>
-                                                    <pre class="mt-2 mb-0 text-wrap" style="font-size: 0.9rem;">[TODO: Insert specific requirement details missed by baseline]</pre>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Baseline Output</small>
-                                                    <pre class="mt-2 mb-0" style="font-size: 0.9rem;"><code>[TODO: Insert code snippet showing missing functionality]</code></pre>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div class="text-muted mb-2" data-example-key="rq1_compress_explanation">Loading...</div>
+                                        <small class="text-uppercase text-muted fw-bold">Example</small>
+                                        <div class="prompt-box mb-0 mt-2" data-example-key="rq1_metagpt_compress_example">Loading...</div>
                                     </div>
                                 </div>
 
@@ -439,21 +431,9 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold text-danger">Defect Type 2: Fragmented Implementation (Regression)</h6>
                                         <p class="small text-muted mb-2">Without strict boundaries, new implementations often break existing code or rely on mocks.</p>
-                                        
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Existing Functionality</small>
-                                                    <pre class="mt-2 mb-0 text-wrap" style="font-size: 0.9rem;">[TODO: Describe functionality that was working before]</pre>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Broken by New Change</small>
-                                                    <pre class="mt-2 mb-0" style="font-size: 0.9rem;"><code>[TODO: Insert code snippet showing the regression or mock usage]</code></pre>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div class="text-muted mb-2" data-example-key="rq1_fragmented_explanation">Loading...</div>
+                                        <small class="text-uppercase text-muted fw-bold">Example</small>
+                                        <div class="prompt-box mb-0 mt-2" data-example-key="rq1_fragmented_example">Loading...</div>
                                     </div>
                                 </div>
                             </div>
@@ -461,31 +441,14 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                             <!-- Section 2: Why ARC Fails -->
                             <div class="mb-5">
                                 <h5><i class="fas fa-exclamation-triangle text-warning"></i> When ARC Fails?</h5>
-                                <p class="text-muted">
-                                    ARC strictly follows the requirement graph as the source of truth, missing implicit knowledge.
-                                    It also struggles when test feedback is insufficient to locate root causes.
-                                </p>
-
+  
                                 <!-- ARC Defect 1 -->
                                 <div class="card bg-light border-0 mb-3">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold text-warning">Defect Type 1: Missing Implicit Requirements</h6>
-                                        <p class="small text-muted mb-2">ARC misses common-sense constraints not explicitly stated in the DSL.</p>
-                                        
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Implicit Constraint</small>
-                                                    <pre class="mt-2 mb-0 text-wrap" style="font-size: 0.9rem;">[TODO: e.g., Passport ID must be unique (12306)]</pre>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">ARC Implementation</small>
-                                                    <pre class="mt-2 mb-0" style="font-size: 0.9rem;"><code>[TODO: Insert code validating format but missing DB unique check]</code></pre>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div class="text-muted mb-2" data-example-key="rq1_bad_case_1_explanation">Loading...</div>
+                                        <small class="text-uppercase text-muted fw-bold">Example (Requirement)</small>
+                                        <div class="prompt-box mb-0 mt-2" data-example-key="rq1_bad_case_1" style="max-height: none; overflow: visible;">Loading...</div>
                                     </div>
                                 </div>
 
@@ -493,22 +456,9 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                                 <div class="card bg-light border-0">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold text-warning">Defect Type 2: Limited Feedback Signal</h6>
-                                        <p class="small text-muted mb-2">Test failures do not provide enough information for self-correction within budget.</p>
-                                        
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Vague Test Failure</small>
-                                                    <pre class="mt-2 mb-0 text-wrap" style="font-size: 0.9rem;">[TODO: e.g., "Product A not shown" without stack trace]</pre>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="p-3 bg-white border rounded h-100">
-                                                    <small class="text-uppercase text-muted fw-bold">Failed Correction</small>
-                                                    <pre class="mt-2 mb-0" style="font-size: 0.9rem;"><code>[TODO: Insert code showing ARC's failed attempt to fix it]</code></pre>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div class="text-muted mb-2" data-example-key="rq1_bad_case_2_explanation">Loading...</div>
+                                        <small class="text-uppercase text-muted fw-bold">Example (Code)</small>
+                                        <div class="prompt-box mb-0 mt-2" data-example-key="rq1_bad_case_2_code" style="max-height: none; overflow: visible;">Loading...</div>
                                     </div>
                                 </div>
                             </div>
@@ -516,161 +466,87 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                     </div>
                 </div>
 
-                <!-- RQ2: Overhead -->
-                <div class="tab-pane fade" id="pills-rq2">
+                <!-- Video Demos -->
+                <div class="tab-pane fade" id="pills-video">
                     <div class="card card-body border-0 shadow-sm">
-                        <h4 class="card-title">RQ2: Overhead Analysis</h4>
-                        <p>We measured the end-to-end runtime (Time in min) and total token consumption (Cost in Million tokens) required to compile requirements.</p>
+                        <p class="text-muted mb-4">Watch the video demonstrations of the systems generated by ARC.</p>
                         
-                        <div class="table-responsive">
-                            <table class="table table-hover table-sm mt-3 align-middle text-center small">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th rowspan="2" class="align-middle text-start">System</th>
-                                        <th colspan="2">Ours</th>
-                                        <th colspan="2">MetaGPT</th>
-                                        <th colspan="2">OpenHands</th>
-                                        <th colspan="2">Cursor</th>
-                                        <th colspan="2">Copilot</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Time</th><th>Cost</th>
-                                        <th>Time</th><th>Cost</th>
-                                        <th>Time</th><th>Cost</th>
-                                        <th>Time</th><th>Cost</th>
-                                        <th>Time</th><th>Cost</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-start fw-bold">BookStack</td>
-                                        <td class="table-info">145.98</td><td class="table-info">11.80</td>
-                                        <td>48.90</td><td>0.98</td>
-                                        <td>22.00</td><td>5.69</td>
-                                        <td>29.16</td><td>3.82</td>
-                                        <td>13.28</td><td>2.46</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Keep</td>
-                                        <td class="table-info">161.04</td><td class="table-info">17.50</td>
-                                        <td>37.83</td><td>0.38</td>
-                                        <td>22.35</td><td>6.70</td>
-                                        <td>13.58</td><td>1.84</td>
-                                        <td>22.78</td><td>3.95</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Stack Overflow</td>
-                                        <td class="table-info">231.52</td><td class="table-info">21.38</td>
-                                        <td>42.38</td><td>0.67</td>
-                                        <td>52.00</td><td>14.43</td>
-                                        <td>16.48</td><td>3.47</td>
-                                        <td>22.50</td><td>5.14</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">PrestaShop</td>
-                                        <td class="table-info">253.95</td><td class="table-info">22.76</td>
-                                        <td>42.98</td><td>0.89</td>
-                                        <td>34.72</td><td>3.94</td>
-                                        <td>19.73</td><td>4.45</td>
-                                        <td>14.12</td><td>2.85</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">12306</td>
-                                        <td class="table-info">351.52</td><td class="table-info">27.02</td>
-                                        <td>53.72</td><td>1.23</td>
-                                        <td>38.73</td><td>16.29</td>
-                                        <td>39.11</td><td>7.26</td>
-                                        <td>17.40</td><td>3.81</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Ctrip</td>
-                                        <td class="table-info">363.27</td><td class="table-info">26.38</td>
-                                        <td>35.00</td><td>0.90</td>
-                                        <td>26.68</td><td>5.24</td>
-                                        <td>16.21</td><td>2.74</td>
-                                        <td>18.51</td><td>3.35</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <!-- Top Row -->
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">BookStack</h6>
+                                        <small class="d-block text-muted mb-3">Knowledge Base</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">Google Keep</h6>
+                                        <small class="d-block text-muted mb-3">Interactive Productivity Tool</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">Stack Overflow</h6>
+                                        <small class="d-block text-muted mb-3">Community Q&A Platform</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="mt-4 p-3 border-start border-4 border-primary bg-light">
-                            <h5>Key Insight</h5>
-                            <p class="mb-0">
-                                ARC consumes more time and tokens (High Overhead) but ensures correctness. Baselines maintain low overhead regardless of complexity, leading to failure in large systems.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RQ3: Ablation (New) -->
-                <div class="tab-pane fade" id="pills-rq3">
-                    <div class="card card-body border-0 shadow-sm">
-                        <h4 class="card-title">RQ3: Ablation Study</h4>
-                        <p>We evaluated the contribution of each component by removing them (w/o) from ARC. Metrics: <strong>Pass Rate (%)</strong>, <strong>Time (min)</strong>, <strong>Cost (M)</strong>.</p>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-hover table-sm mt-3 align-middle text-center small">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th rowspan="2" class="align-middle text-start">System</th>
-                                        <th colspan="3">Ours</th>
-                                        <th colspan="3">w/o DFS Strategy</th>
-                                        <th colspan="3">w/o Test-Driven</th>
-                                        <th colspan="3">w/o Traceability</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Pass</th><th>Time</th><th>Cost</th>
-                                        <th>Pass</th><th>Time</th><th>Cost</th>
-                                        <th>Pass</th><th>Time</th><th>Cost</th>
-                                        <th>Pass</th><th>Time</th><th>Cost</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-start fw-bold">BookStack</td>
-                                        <td class="table-success">91.11</td><td>145.98</td><td>11.80</td>
-                                        <td>63.33</td><td>84.32</td><td>3.09</td>
-                                        <td>60.00</td><td>112.77</td><td>11.74</td>
-                                        <td>90.00</td><td>164.78</td><td>15.92</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Keep</td>
-                                        <td class="table-success">91.85</td><td>161.04</td><td>17.50</td>
-                                        <td>75.56</td><td>103.75</td><td>13.48</td>
-                                        <td>60.00</td><td>136.21</td><td>16.68</td>
-                                        <td>86.67</td><td>162.94</td><td>22.59</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Stack Overflow</td>
-                                        <td class="table-success">86.67</td><td>231.52</td><td>21.38</td>
-                                        <td>35.00</td><td>117.34</td><td>8.42</td>
-                                        <td>56.67</td><td>162.37</td><td>14.74</td>
-                                        <td>83.33</td><td>215.18</td><td>21.24</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">PrestaShop</td>
-                                        <td class="table-success">85.78</td><td>253.95</td><td>22.76</td>
-                                        <td>53.33</td><td>90.12</td><td>8.43</td>
-                                        <td>38.67</td><td>167.14</td><td>10.05</td>
-                                        <td>74.67</td><td>236.24</td><td>22.74</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">12306</td>
-                                        <td class="table-success">78.75</td><td>351.52</td><td>27.02</td>
-                                        <td>36.25</td><td>210.41</td><td>20.21</td>
-                                        <td>67.50</td><td>220.13</td><td>23.63</td>
-                                        <td>77.50</td><td>429.08</td><td>25.45</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-bold">Ctrip</td>
-                                        <td class="table-success">75.42</td><td>363.27</td><td>26.38</td>
-                                        <td>33.75</td><td>234.47</td><td>17.16</td>
-                                        <td>48.75</td><td>236.48</td><td>13.99</td>
-                                        <td>71.25</td><td>441.02</td><td>31.22</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <!-- Bottom Row -->
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">PrestaShop</h6>
+                                        <small class="d-block text-muted mb-3">E-commerce Platform</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">12306</h6>
+                                        <small class="d-block text-muted mb-3">Public Ticketing System</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 150px;">
+                                        <i class="fas fa-video text-muted fa-3x"></i>
+                                    </div>
+                                    <div class="card-body text-center p-3">
+                                        <h6 class="card-title fw-bold">Ctrip</h6>
+                                        <small class="d-block text-muted mb-3">Service Aggregation Platform</small>
+                                        <a href="#" class="btn btn-sm btn-outline-primary w-100">Watch Video</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -679,84 +555,148 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
                 <div class="tab-pane fade" id="pills-user">
                     <div class="card card-body border-0 shadow-sm">
                         <h4 class="card-title">User Study: 12306 Train Ticketing System</h4>
-                        <p>We recruited 21 novice participants (7 groups) to build a complex train ticketing system using ARC.</p>
-                        
+                        <p>We recruited 21 novice participants (7 groups) to build a complex train ticketing system using ARC. The requirement DSL was written collaboratively within their group and then uniformly converted using ARC. The total time spent on writing and the conversion time were recorded. To complete the experiments in a shorter time and maintain control, we defined the functional scope, requiring only the core functional modules for the experiments.</p>
+
                         <div class="table-responsive mt-4">
                             <table class="table table-hover align-middle text-center">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Group ID</th>
+                                        <th>Index</th>
                                         <th>Test Pass Rate (%)</th>
-                                        <th>DSL Completion Time (hrs)</th>
-                                        <th>Requirement Iterations</th>
-                                        <th>DSL Lines</th>
-                                        <th>Feedback Summary</th>
+                                        <th>DSL Writing Time (h)</th>
+                                        <th>Project Generation Time (h)</th>
+                                        <th>Number of Requirements</th>
+                                        <th>Preferred Method (ARC / Vibe-coding / Human-written)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>90</td>
+                                        <td>4</td>
+                                        <td>4.5</td>
+                                        <td>70</td>
+                                        <td>ARC</td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>90</td>
+                                        <td>8</td>
+                                        <td>6</td>
+                                        <td>120</td>
+                                        <td>ARC</td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>96</td>
+                                        <td>9.8</td>
+                                        <td>4</td>
+                                        <td>174</td>
+                                        <td>ARC</td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>80</td>
+                                        <td>3.4</td>
+                                        <td>5.5</td>
+                                        <td>50</td>
+                                        <td>ARC</td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>96</td>
+                                        <td>4.7</td>
+                                        <td>5</td>
+                                        <td>134</td>
+                                        <td>ARC</td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>94</td>
+                                        <td>6.2</td>
+                                        <td>6</td>
+                                        <td>144</td>
+                                        <td>Vibe-coding</td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill value]</td>
-                                        <td>[TODO: Fill feedback]</td>
+                                        <td>86</td>
+                                        <td>3.1</td>
+                                        <td>2.5</td>
+                                        <td>58</td>
+                                        <td>ARC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Avg.</td>
+                                        <td>90.3</td>
+                                        <td>5.6</td>
+                                        <td>4.8</td>
+                                        <td>107</td>
+                                        <td>-</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div class="mt-4 p-3 bg-light font-italic rounded">
-                            <i class="fas fa-quote-left text-muted"></i>
-                            <span class="ms-2 small">"ARC supported more accurate implementation of requirements with fewer manual interactions compared to vibe-coding." (86% Agreement)</span>
+                        <div class="mt-5">
+                            <p class="text-muted">Click the links below to view the results generated by participants.</p>
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 120px;">
+                                            <i class="fas fa-image text-muted fa-2x"></i>
+                                        </div>
+                                        <div class="card-body text-center p-2">
+                                            <small class="d-block text-muted mb-2">Participant 1</small>
+                                            <a href="#" class="btn btn-sm btn-outline-primary w-100">View Result</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 120px;">
+                                            <i class="fas fa-image text-muted fa-2x"></i>
+                                        </div>
+                                        <div class="card-body text-center p-2">
+                                            <small class="d-block text-muted mb-2">Participant 2</small>
+                                            <a href="#" class="btn btn-sm btn-outline-primary w-100">View Result</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 120px;">
+                                            <i class="fas fa-image text-muted fa-2x"></i>
+                                        </div>
+                                        <div class="card-body text-center p-2">
+                                            <small class="d-block text-muted mb-2">Participant 3</small>
+                                            <a href="#" class="btn btn-sm btn-outline-primary w-100">View Result</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 120px;">
+                                            <i class="fas fa-image text-muted fa-2x"></i>
+                                        </div>
+                                        <div class="card-body text-center p-2">
+                                            <small class="d-block text-muted mb-2">Participant 4</small>
+                                            <a href="#" class="btn btn-sm btn-outline-primary w-100">View Result</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 120px;">
+                                            <i class="fas fa-image text-muted fa-2x"></i>
+                                        </div>
+                                        <div class="card-body text-center p-2">
+                                            <small class="d-block text-muted mb-2">Participant 5</small>
+                                            <a href="#" class="btn btn-sm btn-outline-primary w-100">View Result</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -771,6 +711,12 @@ NOTE: You do not have access to the specific Requirement Node ID or the pre-gene
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="home.js"></script>
+    <script src="prompts.js"></script>
+    <script src="examples.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
