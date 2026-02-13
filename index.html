@@ -98,79 +98,49 @@
                     
                     <h3 id="methodology" class="border-bottom pb-2 mb-5 mt-5">Methodology Overview</h3>
                     
-                    <!-- Step 1: DFS Strategy -->
-                    <div class="method-step mb-5">
-                        <div class="text-center mb-4">
-                            <h4 class="fw-bold"><i class="fas fa-project-diagram me-2 text-primary"></i>1. DFS Strategy</h4>
-                            <p class="text-muted">Synthesizing testable architecture from requirement graph</p>
+                    <!-- Part 1: Overall Process Overview -->
+                    <div class="mb-5">
+                        <h4 class="fw-bold mb-3">1. Overall Process Overview</h4>
+                        <div class="mb-4 text-center">
+                            <img src="assets/method_overview.png" alt="Method Overview" class="img-fluid rounded shadow-sm" />
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlBuPbtBZr27nPX2OdaYUVNhr4kzN80y2OEsGIf6bixL4P3eX1nyBHYWPuVLE1PkafXhmMmiPp05Vo/pubembed?start=false&loop=true&delayms=3000"
-                                    frameborder="0"
-                                    width="640"
-                                    height="389"
-                                    allowfullscreen="true"
-                                    mozallowfullscreen="true"
-                                    webkitallowfullscreen="true">
-                                </iframe>
+                        <p class="caption text-center text-muted mb-4">Figure: The ARC Framework Workflow showing the Top-down synthesis and Bottom-up implementation loop.</p> 
+                        <p>The ARC framework operates in two phases to ensure traceability and correctness:</p>
+                        <ul>
+                            <li><strong>Phase 1: Testable Architecture Construction.</strong> We use a Domain Specific Language (DSL) to model requirements as a graph. Agents perform a DFS traversal to synthesize database schemas, API definitions, and UI component stubs, while simultaneously generating <em>Test Suites</em> (Unit, API, GUI) for verification.</li>
+                            <li><strong>Phase 2: Constrained Code Generation.</strong> Code is implemented bottom-up. A gating mechanism ensures that no code is committed unless it passes the pre-generated tests, solving the hallucination problem in large-scale generation.</li>
+                        </ul>
+                        
+                        <!-- DFS Strategy Slides -->
+                        <div class="mt-5">
+                            <h5 class="fw-bold mb-3">Quick Overview of the Process</h5>
+                            <div class="d-flex justify-content-center">
+                                <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
+                                    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlBuPbtBZr27nPX2OdaYUVNhr4kzN80y2OEsGIf6bixL4P3eX1nyBHYWPuVLE1PkafXhmMmiPp05Vo/pubembed?start=false&loop=true&delayms=3000"
+                                        frameborder="0"
+                                        width="640"
+                                        height="389"
+                                        allowfullscreen="true"
+                                        mozallowfullscreen="true"
+                                        webkitallowfullscreen="true">
+                                    </iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 2: Top-down Design -->
-                    <div class="method-step mb-5">
-                        <div class="text-center mb-4">
-                            <h4 class="fw-bold"><i class="fas fa-layer-group me-2 text-primary"></i>2. Top-down Design Phase</h4>
-                            <p class="text-muted">Decomposing requirements into verifiable interfaces</p>
-                        </div>
+                    <!-- Part 2: Specific Examples -->
+                    <div class="mb-5">
+                        <h4 class="fw-bold mb-3">2. Specific Examples</h4>
+                        <p>
+                            For a detailed demonstration, please watch the video on YouTube: <a href="https://youtu.be/gqoSpjp-4-M" target="_blank">https://youtu.be/gqoSpjp-4-M</a>
+                        </p>
                         <div class="d-flex justify-content-center">
                             <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSb9EN9SHHxvDWdwKQDKC-412xZdTid022_FAGC2efsI_q_oQK8wZC50qtD_ekcPrAFEtIlFGzU8Byo/pubembed?start=false&loop=true&delayms=3000" 
-                                    frameborder="0" 
-                                    width="640" 
-                                    height="389" 
-                                    allowfullscreen="true" 
-                                    mozallowfullscreen="true" 
-                                    webkitallowfullscreen="true">
-                                </iframe>
+                                <img src="assets/spec2app1.gif" alt="Tool Demonstration" class="img-fluid" />
                             </div>
                         </div>
                     </div>
-
-                    <!-- Step 3: Bottom-up Implementation -->
-                    <div class="method-step mb-5">
-                        <div class="text-center mb-4">
-                            <h4 class="fw-bold"><i class="fas fa-code me-2 text-primary"></i>3. Bottom-up Implementation Phase</h4>
-                            <p class="text-muted">Generating code gated by pre-generated test suites</p>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="shadow rounded overflow-hidden" style="max-width: 100%;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSb9EN9SHHxvDWdwKQDKC-412xZdTid022_FAGC2efsI_q_oQK8wZC50qtD_ekcPrAFEtIlFGzU8Byo/pubembed?start=false&loop=true&delayms=3000" 
-                                    frameborder="0" 
-                                    width="640" 
-                                    height="389" 
-                                    allowfullscreen="true" 
-                                    mozallowfullscreen="true" 
-                                    webkitallowfullscreen="true">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 
-                    <p>The ARC framework operates in two phases to ensure traceability and correctness:</p>
-                    <ul>
-                        <li><strong>Phase 1: Testable Architecture Construction.</strong> We use a Domain Specific Language (DSL) to model requirements as a graph. Agents perform a DFS traversal to synthesize database schemas, API definitions, and UI component stubs, while simultaneously generating <em>Test Suites</em> (Unit, API, GUI) for verification.</li>
-                        <li><strong>Phase 2: Constrained Code Generation.</strong> Code is implemented bottom-up. A gating mechanism ensures that no code is committed unless it passes the pre-generated tests, solving the hallucination problem in large-scale generation.</li>
-                    </ul> 
-                    -->
-
-                    <!-- 
-                    <div class="mb-4 text-center">
-                        <img src="assets/method_overview.png" alt="Method Overview" class="img-fluid rounded shadow-sm" />
-                    </div>
-                    <p class="caption">Figure: The ARC Framework Workflow showing the Top-down synthesis and Bottom-up implementation loop.</p> 
-                    -->
                 </div>
             </div>
             </div>
@@ -427,7 +397,7 @@
                                 </div>
 
                                 <!-- Baseline Defect 2 -->
-                                <div class="card bg-light border-0">
+                                <!-- <div class="card bg-light border-0">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold text-danger">Defect Type 2: Fragmented Implementation (Regression)</h6>
                                         <p class="small text-muted mb-2">Without strict boundaries, new implementations often break existing code or rely on mocks.</p>
@@ -435,7 +405,7 @@
                                         <small class="text-uppercase text-muted fw-bold">Example</small>
                                         <div class="prompt-box mb-0 mt-2" data-example-key="rq1_fragmented_example">Loading...</div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- Section 2: Why ARC Fails -->
