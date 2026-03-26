@@ -42,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="showSection('cases')" id="nav-cases">Evaluation</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('appendix')" id="nav-appendix">Response Appendix</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -669,6 +672,38 @@
             </div>
         </div>
 
+        <!-- Appendix Page -->
+        <div id="appendix" class="page-section container">
+            <h2 class="mb-4 text-center">Response Appendix</h2>
+
+            <ul class="nav nav-pills mb-4 justify-content-center custom-pills" id="appendix-pills-tab" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active px-4 py-2" data-bs-toggle="pill" data-bs-target="#pills-transform-script">Transform Script</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="appendix-pills-tabContent">
+                
+                <!-- Transform Script Tab -->
+                <div class="tab-pane fade show active" id="pills-transform-script">
+                    <div class="card card-body border-0 shadow-sm">
+                        <div class="mt-4" data-example-key="transform_script_readme">
+                        </div>
+
+                        <hr class="my-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5>Python Script (<code>convert_prd.py</code>)</h5>
+                            <button class="btn btn-sm btn-outline-secondary" id="copy-script-btn" onclick="copyScriptCode(this)">Copy Code</button>
+                        </div>
+                        <div class="position-relative bg-light rounded p-3" style="max-height: 500px; overflow-y: auto;" data-example-key="transform_script_code_block">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div> <footer>
         <div class="container">
             <p>&copy; 2026 ARC Project. All resources are for academic research.</p>
@@ -679,9 +714,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-batch.min.js"></script>
     <script src="home.js"></script>
     <script src="prompts.js"></script>
     <script src="examples.js"></script>
+    <script src="appendix.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
