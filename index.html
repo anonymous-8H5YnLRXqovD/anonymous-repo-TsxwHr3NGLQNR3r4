@@ -677,15 +677,18 @@
             <h2 class="mb-4 text-center">Response Appendix</h2>
 
             <ul class="nav nav-pills mb-4 justify-content-center custom-pills" id="appendix-pills-tab" role="tablist">
-                <li class="nav-item">
-                    <button class="nav-link active px-4 py-2" data-bs-toggle="pill" data-bs-target="#pills-transform-script">Transform Script</button>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active px-4 py-2" id="pills-transform-script-tab" data-bs-toggle="pill" data-bs-target="#pills-transform-script" type="button" role="tab" aria-controls="pills-transform-script" aria-selected="true">Transform Script</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 py-2" id="pills-predefined-template-tab" data-bs-toggle="pill" data-bs-target="#pills-predefined-template" type="button" role="tab" aria-controls="pills-predefined-template" aria-selected="false">Predefined Template</button>
                 </li>
             </ul>
 
             <div class="tab-content" id="appendix-pills-tabContent">
                 
                 <!-- Transform Script Tab -->
-                <div class="tab-pane fade show active" id="pills-transform-script">
+                <div class="tab-pane fade show active" id="pills-transform-script" role="tabpanel" aria-labelledby="pills-transform-script-tab">
                     <div class="card card-body border-0 shadow-sm">
                         <div class="mt-4" data-example-key="transform_script_readme">
                         </div>
@@ -698,6 +701,12 @@
                         </div>
                         <div class="position-relative bg-light rounded p-3" style="max-height: 500px; overflow-y: auto;" data-example-key="transform_script_code_block">
                         </div>
+                    </div>
+                </div>
+
+                <!-- Predefined Template Tab -->
+                <div class="tab-pane fade" id="pills-predefined-template" role="tabpanel" aria-labelledby="pills-predefined-template-tab">
+                    <div class="card card-body border-0 shadow-sm" data-example-key="predefined_template_content">
                     </div>
                 </div>
 

@@ -134,6 +134,27 @@ function copyScriptCode(btn) {
     }
 }
 
+function copyTemplateCode(btn, elementId) {
+    const codeElement = document.getElementById(elementId);
+    if (codeElement) {
+        navigator.clipboard.writeText(codeElement.innerText).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            btn.classList.replace('btn-outline-secondary', 'btn-success');
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.replace('btn-success', 'btn-outline-secondary');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            btn.innerText = 'Error';
+            setTimeout(() => {
+                btn.innerText = 'Copy Code';
+            }, 2000);
+        });
+    }
+}
+
 /**
  * Jump to a specific section, element, and optionally open a tab.
  * @param {string} sectionId - The ID of the page section (e.g., 'home', 'benchmark')
