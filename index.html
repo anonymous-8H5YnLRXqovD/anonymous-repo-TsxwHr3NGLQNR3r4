@@ -75,7 +75,11 @@
                                 <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('prompts', null)">Line 415-416, Line 519: Detailed agent prompt</a></li>
                                 <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('benchmark', 'supplementary')">Line 551: Visible and functional features for each web system</a></li>
                                 <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('cases', null, 'pills-rq1')">Line 674: Failing cases</a></li>
-                                <li class="mb-0"><a href="#" class="text-decoration-none" onclick="jumpTo('cases', null, 'pills-user')">Line 762,763: Detailed metric distribution and results</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('cases', null, 'pills-user')">Line 762,763: Detailed metric distribution and results</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('appendix', null, 'pills-baseline-setup')">Reviewer#A#Q1: Baseline Setup</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('appendix', null, 'pills-transform-script')">Reviewer#A#Q3: Transform Script</a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none" onclick="jumpTo('appendix', null, 'pills-predefined-template')">Reviewer#A#Q4: Predefined Template</a></li>
+                                <li class="mb-0"><a href="#" class="text-decoration-none" onclick="jumpTo('appendix', null, 'pills-dsl-criteria')">Reviewer#A#Q5: DSL Criteria</a></li>
                             </ul>
                         </div>
                     </div>
@@ -678,13 +682,13 @@
 
             <ul class="nav nav-pills mb-4 justify-content-center custom-pills" id="appendix-pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 py-2" id="pills-baseline-setup-tab" data-bs-toggle="pill" data-bs-target="#pills-baseline-setup" type="button" role="tab" aria-controls="pills-baseline-setup" aria-selected="false">Baseline Setup</button>
+                </li>
+                <li class="nav-item" role="presentation">
                     <button class="nav-link active px-4 py-2" id="pills-transform-script-tab" data-bs-toggle="pill" data-bs-target="#pills-transform-script" type="button" role="tab" aria-controls="pills-transform-script" aria-selected="true">Transform Script</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link px-4 py-2" id="pills-predefined-template-tab" data-bs-toggle="pill" data-bs-target="#pills-predefined-template" type="button" role="tab" aria-controls="pills-predefined-template" aria-selected="false">Predefined Template</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link px-4 py-2" id="pills-baseline-setup-tab" data-bs-toggle="pill" data-bs-target="#pills-baseline-setup" type="button" role="tab" aria-controls="pills-baseline-setup" aria-selected="false">Baseline Setup</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link px-4 py-2" id="pills-dsl-criteria-tab" data-bs-toggle="pill" data-bs-target="#pills-dsl-criteria" type="button" role="tab" aria-controls="pills-dsl-criteria" aria-selected="false">DSL Criteria</button>
